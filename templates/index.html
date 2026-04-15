@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar de Engelamiento - Aviation Weather</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Main Map Container -->
+        <div id="map"></div>
+
+        <!-- Glassmorphism Overlay: Header -->
+        <header class="glass-panel header">
+            <h1>Riesgo de Engelamiento</h1>
+        </header>
+
+        <!-- Glassmorphism Overlay: Controls -->
+        <div class="glass-panel controls">
+            <div class="playback-controls">
+                <button id="prevBtn" class="control-btn">⏮</button>
+                <button id="playBtn" class="control-btn play">▶</button>
+                <button id="nextBtn" class="control-btn">⏭</button>
+            </div>
+            
+            <div class="timeline-container">
+                <input type="range" id="timeSlider" min="0" max="10" value="0" step="1">
+                <div class="time-display">
+                    <span id="currentTime">Cargando datos...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Glassmorphism Overlay: Legend -->
+        <div class="glass-panel legend">
+            <h3>Presión / Altitud</h3>
+            <div class="legend-table">
+                <div class="legend-row"><span class="color p1000"></span><span>1000 hPa</span><span>0m</span></div>
+                <div class="legend-row"><span class="color p950"></span><span>950 hPa</span><span>550m</span></div>
+                <div class="legend-row"><span class="color p900"></span><span>900 hPa</span><span>1000m</span></div>
+                <div class="legend-row"><span class="color p850"></span><span>850 hPa</span><span>1500m</span></div>
+                <div class="legend-row"><span class="color p800"></span><span>800 hPa</span><span>2000m</span></div>
+            </div>
+        </div>
+
+        <!-- Info Panel with Coordinates -->
+        <div class="glass-panel info">
+            <div class="info-item coords">
+                <span class="label">Lat:</span>
+                <span class="value" id="latDisplay">--</span>
+            </div>
+            <div class="info-item coords">
+                <span class="label">Lon:</span>
+                <span class="value" id="lonDisplay">--</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="../static/js/app.js"></script>
+</body>
+</html>

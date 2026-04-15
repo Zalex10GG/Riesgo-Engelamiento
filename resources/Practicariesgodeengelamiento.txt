@@ -1,0 +1,21 @@
+Practica riesgo de engelamiento:
+Condiciones:
+- temperatura
+- hidrometeoros líquidos
+Variable:
+x time
+x lat 
+x long
+qcloud 4D (x,y,z,t)
+q rain 4D (x,y,z,t)
+q ice 4D (x,y,z,t)
+T viene en kelvin
+P
+
+Hay que buscar en cada pixel donde hay hidrometeoros liquidos y temperaturas bajo cero. 
+De momento quiero que hay en ese pixel q rain o q cloud y la temperatura es bajo 0. salga bien.
+La representación quiero que sea en un mapa.
+
+
+Siguiente versión: hacer cross section de la ruta. altura con el recorrido de la ruta de A a B y poner las masas donde haya engelamiento en plan burbuja
+
