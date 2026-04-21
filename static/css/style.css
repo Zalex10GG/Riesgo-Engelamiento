@@ -90,6 +90,42 @@ body {
     gap: 20px;
 }
 
+.top-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.mode-selector {
+    display: flex;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+}
+
+.mode-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mode-btn:hover {
+    color: var(--text);
+}
+
+.mode-btn.active {
+    background: var(--accent);
+    color: #020617;
+}
+
 .control-btn {
     background: transparent;
     border: 1px solid var(--glass-border);
@@ -192,12 +228,12 @@ body {
     border-radius: 2px;
 }
 
-/* Colores RdYlBu_r (Approx) */
-.p800 { background-color: #d73027; }
-.p850 { background-color: #f46d43; }
-.p900 { background-color: #fee090; }
-.p950 { background-color: #e0f3f8; }
-.p1000 { background-color: #4575b4; }
+/* Colores RdYlBu_r (Approx) - Escala Ampliada 250-1000 hPa */
+.p300  { background-color: #d73027; } /* Rojo (Baja presión / Alta altitud) */
+.p500  { background-color: #f46d43; } /* Naranja */
+.p700  { background-color: #fee090; } /* Amarillo */
+.p850  { background-color: #e0f3f8; } /* Azul claro */
+.p1000 { background-color: #4575b4; } /* Azul oscuro (Alta presión / Baja altitud) */
 
 /* Info Panel */
 .info {
@@ -226,6 +262,124 @@ body {
 .info-item .value {
     font-weight: 600;
     font-variant-numeric: tabular-nums;
+}
+
+/* Trajectory Button */
+.action-btn {
+    background: var(--accent);
+    color: #020617;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.action-btn.active {
+    background: #f43f5e; /* Rose 500 */
+    color: white;
+}
+
+/* Profile Panel */
+.profile-panel {
+    top: 100px;
+    left: 20px;
+    width: 800px;
+    max-width: calc(100vw - 40px);
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.profile-panel.hidden {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.profile-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.profile-content {
+    flex: 1;
+    min-height: 0;
+    padding: 10px;
+}
+
+#profileChart {
+    width: 100%;
+    height: 100%;
+}
+
+.profile-footer {
+    padding: 12px 24px;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid var(--glass-border);
+}
+
+.path-info {
+    display: flex;
+    gap: 24px;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+}
+
+.path-info span span {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.selecting-path {
+    cursor: crosshair !important;
+}
+
+/* Custom Marker Labels */
+.custom-marker-label {
+    background: var(--glass-bg);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--accent);
+    color: var(--text);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    white-space: nowrap;
+}
+
+.leaflet-tooltip-top:before {
+    border-top-color: var(--accent);
 }
 
 /* Leaflet Dark Theme Adjustments */

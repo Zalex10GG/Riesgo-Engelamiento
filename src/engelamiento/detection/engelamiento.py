@@ -2,15 +2,18 @@ import numpy as np
 import xarray as xr
 
 
-def detect_engelamiento(data: dict) -> xr.DataArray:
+def detect_engelamiento(data: dict, mode: str = "top") -> xr.DataArray:
     """
-    Detecta pixeles con riesgo de engelamiento.
+    Detecta pixeles con riesgo de engelamiento y devuelve la presión (hPa).
+    (Volvemos a presión porque el archivo actual no tiene PH/PHB para calcular Z exacto).
 
-    Engelamiento: TK < 273.15 K AND (QRAIN > 0 OR QCLOUD > 0)
+    Args:
+        data: Diccionario con variables WRF.
+        mode: "top" para el nivel más alto (mínima presión), 
+              "bottom" para el nivel más bajo (máxima presión).
 
     Returns:
         DataArray con presión (hPa) donde hay riesgo, NaN si no hay riesgo.
-        Si múltiples niveles, toma el de menor presión (mayor altitud).
     """
     TK = data["TK"]
     P = data["P"] + data["PB"]  # Presión total en Pa
@@ -25,8 +28,12 @@ def detect_engelamiento(data: dict) -> xr.DataArray:
     # Aplicar máscara y convertir a hPa
     pressure_hpa = (P / 100.0).where(engelamiento_mask)
 
-    # Para cada pixel (y,z): tomar el nivel de menor presión (mayor altitud)
-    # Dimensión bottom_top es la vertical
-    result = pressure_hpa.min(dim="bottom_top")
+    # Para cada pixel (y,z): tomar el nivel según modo
+    # "top" (superior) = menor presión (valor numérico mínimo)
+    # "bottom" (inferior) = mayor presión (valor numérico máximo)
+    if mode == "top":
+        result = pressure_hpa.min(dim="bottom_top")
+    else:
+        result = pressure_hpa.max(dim="bottom_top")
 
     return result

@@ -26,10 +26,16 @@
 
         <!-- Glassmorphism Overlay: Controls -->
         <div class="glass-panel controls">
-            <div class="playback-controls">
-                <button id="prevBtn" class="control-btn">⏮</button>
-                <button id="playBtn" class="control-btn play">▶</button>
-                <button id="nextBtn" class="control-btn">⏭</button>
+            <div class="top-controls">
+                <div class="playback-controls">
+                    <button id="prevBtn" class="control-btn">⏮</button>
+                    <button id="playBtn" class="control-btn play">▶</button>
+                    <button id="nextBtn" class="control-btn">⏭</button>
+                </div>
+                <div class="mode-selector">
+                    <button id="modeTopBtn" class="mode-btn">Nivel Inferior</button>
+                    <button id="modeBottomBtn" class="mode-btn active">Nivel Superior</button>
+                </div>
             </div>
             
             <div class="timeline-container">
@@ -44,16 +50,19 @@
         <div class="glass-panel legend">
             <h3>Presión / Altitud</h3>
             <div class="legend-table">
-                <div class="legend-row"><span class="color p1000"></span><span>1000 hPa</span><span>0m</span></div>
-                <div class="legend-row"><span class="color p950"></span><span>950 hPa</span><span>550m</span></div>
-                <div class="legend-row"><span class="color p900"></span><span>900 hPa</span><span>1000m</span></div>
+                <div class="legend-row"><span class="color p300"></span><span>300 hPa</span><span>9000m</span></div>
+                <div class="legend-row"><span class="color p500"></span><span>500 hPa</span><span>5500m</span></div>
+                <div class="legend-row"><span class="color p700"></span><span>700 hPa</span><span>3000m</span></div>
                 <div class="legend-row"><span class="color p850"></span><span>850 hPa</span><span>1500m</span></div>
-                <div class="legend-row"><span class="color p800"></span><span>800 hPa</span><span>2000m</span></div>
+                <div class="legend-row"><span class="color p1000"></span><span>1000 hPa</span><span>0m</span></div>
             </div>
         </div>
 
         <!-- Info Panel with Coordinates -->
         <div class="glass-panel info">
+            <button id="trajectoryBtn" class="action-btn">
+                <span class="icon">✈️</span> Perfil de trayectoria
+            </button>
             <div class="info-item coords">
                 <span class="label">Lat:</span>
                 <span class="value" id="latDisplay">--</span>
@@ -63,8 +72,28 @@
                 <span class="value" id="lonDisplay">--</span>
             </div>
         </div>
+
+        <!-- Trajectory Profile Panel (Hidden by default) -->
+        <div id="profilePanel" class="glass-panel profile-panel hidden">
+            <div class="profile-header">
+                <h3>Perfil Vertical de Trayectoria</h3>
+                <button id="closeProfileBtn" class="close-btn">&times;</button>
+            </div>
+            <div class="profile-content">
+                <div id="profileChart"></div>
+            </div>
+            <div class="profile-footer">
+                <div class="path-info">
+                    <span>A: <span id="pointA">--</span></span>
+                    <span>B: <span id="pointB">--</span></span>
+                    <span>Dist: <span id="totalDist">--</span> km</span>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- Plotly JS for the profile chart -->
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     

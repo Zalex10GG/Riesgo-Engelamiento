@@ -1,16 +1,19 @@
 import os
 import socket
 import sys
+import json
 import threading
 import time
 import webbrowser
 from pathlib import Path
 from http.server import SimpleHTTPRequestHandler, HTTPServer
+from urllib.parse import urlparse, parse_qs
 
 sys.path.append(str(Path(__file__).parent / "src"))
 
 from engelamiento.data.loader import WRFLoader
 from engelamiento.detection.engelamiento import detect_engelamiento
+from engelamiento.detection.trajectory import calculate_vertical_profile
 from engelamiento.visualization.radar_map import plot_engelamiento_map
 from engelamiento.visualization.exporter import FrameExporter
 
@@ -18,6 +21,41 @@ from engelamiento.visualization.exporter import FrameExporter
 class QuietHandler(SimpleHTTPRequestHandler):
     def log_message(self, format, *args):
         pass
+
+    def do_GET(self):
+        parsed_url = urlparse(self.path)
+        if parsed_url.path == "/api/profile":
+            self.handle_profile_api(parsed_url)
+        else:
+            super().do_GET()
+
+    def handle_profile_api(self, parsed_url):
+        query = parse_qs(parsed_url.query)
+        try:
+            # Asegurar que leemos correctamente lat1, lon1 (A) y lat2, lon2 (B)
+            lat1 = float(query.get("lat1")[0])
+            lon1 = float(query.get("lon1")[0])
+            lat2 = float(query.get("lat2")[0])
+            lon2 = float(query.get("lon2")[0])
+            time_idx = int(query.get("time", [0])[0])
+
+            # Cargar datos para el cálculo
+            DATA_PATH = Path("Data/wrfout_d01_2015-04-17_18_00_00_corte.nc")
+            loader = WRFLoader(DATA_PATH)
+            ds = loader._open_dataset()
+
+            # El orden de los argumentos aquí debe ser estricto: A -> B
+            result = calculate_vertical_profile(ds, time_idx, lat1, lon1, lat2, lon2)
+
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.end_headers()
+            self.wfile.write(json.dumps(result).encode("utf-8"))
+        except Exception as e:
+            self.send_response(500)
+            self.end_headers()
+            self.wfile.write(str(e).encode("utf-8"))
 
 
 def start_server(port=5000, directory=None):
