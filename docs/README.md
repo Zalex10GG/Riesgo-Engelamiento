@@ -56,6 +56,15 @@ El sistema permite visualizar dos niveles críticos:
 uv run pytest
 ```
 
+## Documentación
+
+Para más detalles sobre la implementación y la interfaz, consulta los siguientes documentos:
+
+- [Manual de la Interfaz y Perfil Vertical](interfaz.md)
+- [Especificación Técnica (SPEC)](SPEC.md)
+- [Plan de Implementación Original](IMPLEMENTATION_PLAN.md)
+- [Plan de Implementación Web](IMPLEMENTATION_PLAN_WEB.md)
+
 ## Estructura del Proyecto
 
 ```
