@@ -36,7 +36,19 @@ Un pixel tiene riesgo de engelamiento cuando:
 1. `TK < 273.15 K` (temperatura bajo cero)
 2. (`QRAIN > 0` OR `QCLOUD > 0`) (presencia de hidrometeoros líquidos)
 
-El color en el mapa indica la presión (hPa) del nivel donde se produce engelamiento. Si hay múltiples niveles, se toma el de menor presión (mayor altitud).
+El sistema permite visualizar dos niveles críticos:
+- **Nivel Superior (Techo):** Nivel de menor presión (mayor altitud) con riesgo.
+- **Nivel Inferior (Base):** Nivel de mayor presión (menor altitud) con riesgo.
+
+## Características de la Interfaz Web
+
+- **Mapa Interactivo:** Visualización de frames temporales de engelamiento con Leaflet.
+- **Perfil Vertical de Trayectoria:**
+    - Selección de ruta ortodrómica entre dos puntos (A-B).
+    - Muestreo en un corredor de 15 km de ancho.
+    - Perfil de vuelo idealizado (FL290) con fases de ascenso, crucero y descenso.
+    - Visualización de Liquid Water Content (LWC) en $g/m^3$.
+- **Control Temporal:** Timeline interactivo para explorar la evolución del riesgo.
 
 ## Tests
 
